@@ -5,6 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-ML Third Year</title>
     <link rel="stylesheet" href="/style/styles.css">
+    <style>
+        /* Style for folder container */
+.subject-folder {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Style for folder name */
+.subject-folder h3 {
+    margin: 0;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Style for files container */
+.subfolder {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+/* Style for active files container */
+.subfolder.active {
+    max-height: 200px; /* Adjust as needed */
+}
+
+/* Style for file links */
+.subfolder ul {
+    list-style: none;
+    padding: 0;
+}
+
+.subfolder ul li {
+    margin: 5px 0;
+}
+
+.subfolder ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.subfolder ul li a:hover {
+    color: #007bff;
+}
+/* Style for main content */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Style for individual grid items */
+.grid-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+/* Style for grid item headings */
+.grid-item h2 {
+    margin-top: 0;
+}
+
+/* Style for grid item paragraphs */
+.grid-item p {
+    margin-bottom: 0;
+}
+
+
+    </style>
 </head>
 <body>
     <header>
@@ -21,25 +97,129 @@
     </header>
     <main>
        <section class="grid-container">
-    <div class="grid-item">
-        <h2>Notes</h2>
-        <p>This is where you can find study notes.</p>
-    </div>
-    <div class="grid-item">
-        <h2>Assignments</h2>
-        <p>This is where you can find assignments.</p>
-    </div>
-    <div class="grid-item">
-        <h2>Question Papers</h2>
-        <p>This is where you can find question papers.</p>
-    </div>
-</section>
+          <!-- Main Content -->
+  <div class="container-fluid" id="main-content">
+    <!-- Notes section -->
+    <section id="notes" class="subject-section">
+        <h3 style="font-weight: bold; font-size: 24px;">Notes &IMP questions</h3>
 
+      <div id="folder-notes" class="subject-section subject-folders"></div>
+    </section>
+    <!-- textbooks section -->
+    <section id="textbooks" class="subject-section">
+      <h3 style="font-weight: bold; font-size: 24px;">Textbooks</h3>
+      <div id="folder-textbooks" class="subject-section subject-folders"></div>
+    </section>
+    <!-- tie section -->
+    <section id="tie" class="subject-section">
+      <h3 style="font-weight: bold; font-size: 24px;">TIE Important Question Papers</h3>
+      <div id="folder-tie" class="subject-section subject-folders"></div>
+    </section>
+    <!-- oldpapers section -->
+    <section id="oldpapers" class="subject-section">
+      <h3 style="font-weight: bold; font-size: 24px;">Old Question Papers</h3>
+      <div id="folder-oldpapers" class="subject-section subject-folders"></div>
+    </section>
+  </div>
+       </section>
     </main>
     <footer>
         <div class="container">
             <p>&copy; 2024 Karo Padhai</p>
         </div>
     </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-storage-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCN0VLc3wYAeKBk06g-HVtE4dDPcEZo6xk",
+  authDomain: "aiml-smvitm.firebaseapp.com",
+  databaseURL: "https://aiml-smvitm-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "aiml-smvitm",
+  storageBucket: "aiml-smvitm.appspot.com",
+  messagingSenderId: "867145474581",
+  appId: "1:867145474581:web:a2e294081b458bdb69e41c",
+  measurementId: "G-64CF103MLC"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the Firebase Storage service
+        const storage = firebase.storage();
+        
+        async function initializeFirebase() {
+            return { app: firebase.app(), storage };
+        }
+
+        // Call the function to initialize Firebase and render subject folders
+        initializeFirebase().then(({ app, storage }) => {
+            renderFolders('folder-notes', 'notes', storage);
+            renderFolders('folder-textbooks', 'textbooks', storage);
+            renderFolders('folder-tie', 'tie_imp', storage);
+            renderFolders('folder-oldpapers', 'oldpapers', storage);
+        }).catch(error => {
+            console.error('Failed to initialize Firebase:', error);
+        });
+
+        let currentOpenFolder = null;
+
+        // Function to render subject folders
+        async function renderFolders(containerId, folderName, storage) {
+            const foldersDiv = document.getElementById(containerId);
+            if (!foldersDiv) {
+                console.error('Folders container not found.');
+                return;
+            }
+            try {
+                const folderRef = storage.ref().child(folderName);
+                const folderList = await folderRef.listAll();
+                folderList.prefixes.forEach(async (subjectRef) => {
+                    const subjectName = subjectRef.name.split('/').pop(); // Extract subject name from folder path
+                    const subjectDiv = document.createElement('div');
+                    const filesDiv = document.createElement('div');
+                    filesDiv.classList.add('subfolder');
+                    subjectDiv.innerHTML = `<h3>${subjectName.toUpperCase()}</h3>`;
+                    subjectDiv.classList.add('subject-folder');
+                    subjectDiv.appendChild(filesDiv);
+                    foldersDiv.appendChild(subjectDiv);
+
+                    subjectDiv.addEventListener('click', async () => {
+                        const transitionEndHandler = (event) => {
+                            if (event.propertyName === 'max-height') {
+                                event.target.innerHTML = '';
+                                event.target.removeEventListener('transitionend', transitionEndHandler);
+                            }
+                        };
+
+                        if (currentOpenFolder && currentOpenFolder !== filesDiv) {
+                            currentOpenFolder.style.maxHeight = null;
+                            currentOpenFolder.classList.remove('active');
+                            currentOpenFolder.addEventListener('transitionend', transitionEndHandler);
+                        }
+                        if (filesDiv.classList.contains('active')) {
+                            filesDiv.style.maxHeight = null;
+                            filesDiv.addEventListener('transitionend', transitionEndHandler);
+                        } else {
+                            const filesList = await subjectRef.listAll();
+                            const filesLinks = await Promise.all(filesList.items.map(async (itemRef) => {
+                                const url = await itemRef.getDownloadURL();
+                                const fileName = itemRef.name;
+                                return `<li><a href="${url}" target="_blank">${fileName}</a></li>`;
+                            }));
+                            filesDiv.innerHTML = '<ul>' + filesLinks.join('') + '</ul>';
+                            filesDiv.style.maxHeight = `${filesDiv.scrollHeight}px`;
+                            currentOpenFolder = filesDiv;
+                        }
+                        filesDiv.classList.toggle('active');
+                    });
+                });
+            } catch (error) {
+                console.error('Failed to render subject folders:', error);
+            }
+        }
+    </script>
 </body>
 </html>
