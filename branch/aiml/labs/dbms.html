@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="google-adsense-account" content="ca-pub-3267548468157685">
+    <title>DBMS Lab Programs</title>
+    <link rel="icon" href="/media/logo_aiml.png" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Highlight.js CSS for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+    <style>
+        body {
+            background-color: #343a40;
+            color: #ffffff;
+            padding-top: 56px; /* Adjusted for the fixed navbar */
+        }
+        .program-section {
+            margin-top: 20px;
+        }
+        .program-card {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+            color: #343a40;
+            position: relative;
+        }
+        .copy-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #007bff;
+            cursor: pointer;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+        }
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 5px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            opacity: 0.9;
+            border-top: 1px solid #007bff;
+        }
+        .footer-icons {
+            font-size: 24px;
+            margin: 0 10px;
+            color: #007bff;
+            transition: color 0.3s ease-in-out;
+        }
+        .footer-icons:hover {
+            color: #ffffff;
+        }
+        .dark-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+        }
+        .aa {
+            border-top: 2px solid black;
+        }
+        .code-container {
+            position: relative;
+            margin-top: 10px;
+        }
+        .code-container pre {
+            margin: 0;
+            padding: 0;
+        }
+        .code-container pre code {
+            display: block;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="/">DBMS Lab</a>
+</nav>
+
+<div class="container-fluid">
+    <h2 class="text-center mt-4">DBMS Lab Programs</h2>
+
+    <!-- Program 1 -->
+    <div>
+        <div class="col-md-12">
+            <div class="card program-card">
+                <div class="card-body">
+                    <h5 class="card-title">1. Demonstrating creation of tables, applying the view concepts on the tables.</h5>
+                    <hr class="aa">
+                    <h5 class="card-title">Consider the following schema for a Library Database:</h5>
+                    <div class="code-container">
+<pre><code class="text" id="prg1">BOOK(Book_id, Title, Publisher_Name, Pub_Year) 
+BOOK_AUTHORS(Book_id, Author_Name)
+PUBLISHER(Name, Address, Phone) 
+BOOK_COPIES(Book_id, Programme_id, No-of_Copies)
+BOOK_LENDING(Book_id, 
+Programme_id, Card_No, Date_Out, Due_Date) 
+LIBRARY_PROGRAMME (Programme_id, Programme_Name, Address)
+</code></pre>
+                    <hr class="aa">
+                    <h5 class="card-title">Write SQL queries to</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                    <pre><code class="text" id="prg1-q">1. Retrieve details of all books in the library-id, title, name of publisher, authors,number of copies in each branch, etc.
+2. Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017
+3. Delete a book in BOOK table. Update the contents of other tables to reflect this data manipulation operation.
+4. Partition the BOOK table based on year of publication. Demonstrate its working with a simple query.
+5. Create a view of all books and its number of copies that are currently available in the Library.
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">TABLE CREATION AND RECORD INSERTION</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg1-1')"></i>
+<pre><code class="sql" id="prg1-1">CREATE TABLE Publisher(Name VARCHAR(20) PRIMARY KEY, Address VARCHAR(20), Phone BIGINT(10)); 
+INSERT INTO PUBLISHER VALUES ('Wiley', 'BANGALORE', 9989076587);
+
+CREATE TABLE Book (Book_id INTEGER PRIMARY KEY, Title VARCHAR (20), Pub_name VARCHAR (20), Pub_year INTEGER, FOREIGN KEY(Pub_name) REFERENCES Publisher (Name) ON DELETE CASCADE); 
+INSERT INTO BOOK VALUES (101,'DBMS','Wiley', 2010);
+
+CREATE TABLE Book_authors (Book_id INTEGER PRIMARY KEY, Auth_name VARCHAR(20), FOREIGN KEY(Book_id) REFERENCES Book(Book_id) ON DELETE CASCADE); 
+INSERT INTO Book_authors VALUES(101, 'Navathe');
+
+CREATE TABLE Lib_prog(Prog_id INTEGER PRIMARY KEY, Prog_name VARCHAR(20), Address VARCHAR(20));
+INSERT INTO Lib_prog VALUES(201, 'CS', 'Block 1'); 
+
+CREATE TABLE Book_copies(Book_id INTEGER, Prog_id INTEGER, No_of_copies INTEGER, PRIMARY KEY (Book_id, Prog_id), FOREIGN KEY(Book_id) REFERENCES Book(Book_id) ON DELETE CASCADE, FOREIGN KEY (Prog_id) REFERENCES Lib_prog(Prog_id) ON DELETE CASCADE); 
+INSERT INTO Book_copies VALUES(101,201,3);
+
+CREATE TABLE Book_lending (Book_id INTEGER, Prog_id INTEGER, Card_no INTEGER, Date_out DATE, Due_date DATE, PRIMARY KEY(Book_id, Prog_id, Card_no), FOREIGN KEY(Book_id) REFERENCES Book(Book_id) ON DELETE CASCADE, FOREIGN KEY(Prog_id) REFERENCES Lib_prog(prog_id) ON DELETE CASCADE);
+INSERT INTO Book_lending VALUES (101,201, 20 , '2017-05-03', '2017-05-15');</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">SQL QUERIES</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg1-2')"></i>
+<pre><code class="sql" id="prg1-2">1. SELECT B.Book_id, B.Title, B.Pub_name, BA.Auth_name, BC.No_of_copies, BC.Prog_id FROM Book B, Book_authors BA, Book_copies BC WHERE B.Book_id=BA.Book_id AND B.Book_id=BC.Book_id;
+
+2. SELECT Card_no FROM Book_lending WHERE date_out BETWEEN '2017-01-01' AND '2017-06-30' GROUP BY Card_no HAVING Count(*) > 3;
+
+3. DELETE FROM Book WHERE Book_id=101;
+
+4. CREATE VIEW V_Publication AS SELECT title, pub_year FROM book GROUP BY pub_year, title;
+
+    SELECT * FROM V_Publication;
+
+5. CREATE VIEW V_Books AS SELECT B.Book_id, B.Title, BC.No_of_copies, LP.Prog_id, LP.Prog_name FROM Book B, Book_copies BC, Lib_prog LP WHERE B.Book_id=BC.Book_id AND BC.Prog_id=LP.Prog_id;
+
+    SELECT * FROM V_Books
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Program 2 -->
+    <div>
+        <div class="col-md-12">
+            <div class="card program-card">
+                <div class="card-body">
+                    <h5 class="card-title">2.</h5>
+                    <hr class="aa">
+                    <h5 class="card-title">Consider the following schema for Order Database:</h5>
+                    <div class="code-container">
+<pre><code class="text" id="prg2">SALESMAN (Salesman_id, Name, City, Commission)
+CUSTOMER (Customer_id, Cust_Name, City, Grade, Salesman_id)
+ORDERS (Ord_No, Purchase_Amt, Ord_Date, Customer_id, Salesman_id)
+</code></pre>
+                    <hr class="aa">
+                    <h5 class="card-title">Write SQL queries to</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                    <pre><code class="text" id="prg2-q">1. Retrieve details of all books in the library-id, title, name of publisher, authors,number of copies in each branch, etc.
+2. Get the particulars of borrowers who have borrowed more than 3 books, but from Jan 2017 to Jun 2017
+3. Delete a book in BOOK table. Update the contents of other tables to reflect this data manipulation operation.
+4. Partition the BOOK table based on year of publication. Demonstrate its working with a simple query.
+5. Create a view of all books and its number of copies that are currently available in the Library.
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">TABLE CREATION AND RECORD INSERTION</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg2-1')"></i>
+<pre><code class="sql" id="prg2-1">CREATE TABLE Salesman (Salesman_Id INT(4) PRIMARY KEY, Name VARCHAR (20), City VARCHAR (20), Commission VARCHAR (20)); 
+INSERT INTO Salesman VALUES (1000, 'John','Bangalore','25 %'); 
+
+CREATE TABLE Customer (Customer_Id INTEGER PRIMARY KEY, Cust_Name VARCHAR (20), City VARCHAR (20), Grade INTEGER, Salesman_Id INT(4), FOREIGN KEY (Salesman_Id) REFERENCES Salesman (Salesman_Id) ON DELETE SET NULL); 
+INSERT INTO Customer VALUES (10, 'Preethi','Bangalore', 100, 1000); 
+
+CREATE TABLE Orders (Ord_No INTEGER PRIMARY KEY, Purchase_Amt INTEGER, Ord_Date DATE, Customer_Id INTEGER, FOREIGN KEY (Customer_Id) REFERENCES Customer (Customer_Id) ON DELETE CASCADE, Salesman_Id INT(4), FOREIGN KEY (Salesman_Id) REFERENCES Salesman (Salesman_Id) ON DELETE CASCADE); 
+INSERT INTO Orders VALUES (50, 5000, '2023-05-04', 10, 1000);
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">SQL QUERIES</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg2-2')"></i>
+<pre><code class="sql" id="prg2-2">1. SELECT COUNT(Customer_Id) AS Customer_Count FROM Customer WHERE Grade > (SELECT AVG(Grade) FROM Customer WHERE City='Bangalore');
+
+2. SELECT S.Salesman_ID, S.Name FROM Salesman S, Customer C WHERE C.Salesman_Id=S.Salesman_Id GROUP BY C.Salesman_ID HAVING COUNT(C.Customer_Id)>1;
+
+3. SELECT S.Salesman_ID, S.Name, Cust_Name FROM Salesman S, Customer C WHERE S.City = C.City AND S.Salesman_Id= C.Salesman_Id UNION SELECT S.Salesman_Id, Name,'No_customer' FROM Salesman S WHERE NOT EXISTS (SELECT Salesman_id FROM Customer C WHERE S.City = C.City AND S.Salesman_Id= C.Salesman_Id);
+
+4. CREATE VIEW Highest AS SELECT S.Salesman_Id, Name, Ord_Date,Purchase_Amt, City FROM Orders B, Salesman S WHERE S.Salesman_Id=B.Salesman_Id AND B.Purchase_Amt=(SELECT MAX(E.Purchase_Amt) FROM Orders E WHERE B.Ord_Date=E.Ord_Date); 
+    SELECT * FROM Highest; 
+    
+5. DELETE FROM Salesman WHERE Salesman_Id=1000;
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Program 3 -->
+    <div >
+        <div class="col-md-12">
+            <div class="card program-card">
+                <div class="card-body">
+                    <h5 class="card-title">3.</h5>
+                    <hr class="aa">
+                    <h5 class="card-title">Consider the schema for Movie Database:</h5>
+                    <div class="code-container">
+<pre><code class="text" id="prg3">ACTOR (Act_id, Act_Name, Act_Gender)
+DIRECTOR (Dir_id, Dir_Name, Dir_Phone)
+MOVIES (Mov_id, Mov_Title, Mov_Year, Mov_Lang, Dir_id)
+MOVIE_CAST (Act_id, Mov_id, Role)
+RATING (Mov_id, Rev_Stars)    
+</code></pre>
+                    <hr class="aa">
+                    <h5 class="card-title">Write SQL queries to</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                    <pre><code class="text" id="prg3-q">1. List the titles of all movies directed by 'Hitchcock'.
+2. Find the movie names where one or more actors acted in two or more movies.
+3. List all actors who acted in a movie before 2000 and also in a movie after 2015 (use JOIN operation).
+4. Find the title of movies and number of stars for each movie that has at least one rating and find the highest number of stars that movie received. Sort the result by movie title.
+5. Update rating of all movies directed by 'Steven Spielberg' to 5.
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">TABLE CREATION AND RECORD INSERTION</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg3-1')"></i>
+<pre><code class="sql" id="prg3-1">CREATE TABLE ACTOR(Act_id INTEGER PRIMARY KEY, Act_name VARCHAR(20), Act_Gender CHAR(1));
+INSERT INTO ACTOR VALUES (301,'ANUSHKA','F');
+
+CREATE TABLE DIRECTOR(Dir_id INTEGER PRIMARY KEY, Dir_name VARCHAR(20), Dir_Phone BIGINT(10));
+INSERT INTO DIRECTOR VALUES (60,'RAJAMOULI', 8751611001);
+
+CREATE TABLE MOVIES(mov_id INTEGER PRIMARY KEY, mov_title VARCHAR(20), mov_year INTEGER, mov_lang VARCHAR(20),dir_id INTEGER, FOREIGN KEY(dir_id) REFERENCES director(dir_id) ON DELETE CASCADE);
+INSERT INTO MOVIES VALUES (1001,'BAHUBALI-2', 2017, 'TELUGU', 60);
+
+CREATE TABLE MOVIE_CAST (Act_id INTEGER, Mov_id INTEGER, Role VARCHAR(20), PRIMARY KEY(Act_id,Mov_id), FOREIGN KEY(Act_id) REFERENCES Actor(Act_id) ON DELETE CASCADE, FOREIGN KEY(Mov_id) REFERENCES Movies(Mov_id) ON DELETE CASCADE);
+INSERT INTO MOVIE_CAST VALUES (301, 1001, 'HEROINE');
+
+CREATE TABLE RATING(Mov_id INTEGER, Rev_Stars INTEGER, PRIMARY KEY (Mov_id, Rev_Stars), FOREIGN KEY(Mov_id) REFERENCES MOVIES(Mov_id) ON DELETE CASCADE);
+INSERT INTO RATING VALUES (1001, 4);
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">SQL QUERIES</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg3-2')"></i>
+<pre><code class="sql" id="prg3-2">1. SELECT mov_title FROM movies WHERE dir_id=(SELECT dir_id FROM director WHERE dir_name='Hitchcock');
+    
+2. SELECT DISTINCT m.Mov_title FROM Movies m, Movie_cast mc WHERE m.mov_id=mc.mov_id AND Act_id IN (SELECT Act_id FROM Movie_cast GROUP BY Act_id HAVING COUNT(Mov_id)>1);
+
+3. SELECT A.Act_Name, M.Mov_title, M.Mov_year FROM Actor A JOIN Movie_cast mc ON A.Act_id=mc.Act_id JOIN Movies M ON mc.Mov_id = M.Mov_id WHERE M.Mov_year NOT BETWEEN 2000 AND 2015;
+
+4. SELECT m.Mov_title, MAX(Rev_stars) Highest_rating FROM Movies m NATURAL JOIN Rating GROUP BY Mov_title ORDER BY Mov_title;
+
+5. UPDATE Rating SET Rev_stars=5 WHERE Mov_id IN (SELECT Mov_id FROM Movies WHERE Dir_id = (SELECT Dir_id FROM Director WHERE Dir_Name = "RAJAMOULI"));
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Program 4 -->
+    <div >
+        <div class="col-md-12">
+            <div class="card program-card">
+                <div class="card-body">
+                    <h5 class="card-title">4.</h5>
+                    <hr class="aa">
+                    <h5 class="card-title">Consider the schema for College Database:</h5>
+                    <div class="code-container">
+<pre><code class="text" id="prg4">STUDENT (USN, SName, Address, Phone, Gender)
+SEMSEC (SSID, Sem, Sec)
+CLASS (USN, SSID)
+SUBJECT (Subcode, Title, Sem, Credits)
+IAMARKS (USN, Subcode, SSID, Test1, Test2, Test3, FinalIA)
+</code></pre>
+                    <hr class="aa">
+                    <h5 class="card-title">Write SQL queries to</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                    <pre><code class="text" "prg2-q">1. List all the student details studying in fourth semester 'C' section.
+2. Compute the total number of male and female students in each semester and in each section.
+3. Create a view of Test1 marks of student USN '1BI15CS101' in all subjects.
+4. Calculate the FinalIA (average of best two test marks) and update the corresponding table for all students.
+5. Categorize students based on the following criterion:
+    If FinalIA = 17 to 20 then CAT = 'Outstanding'
+    If FinalIA = 12 to 16 then CAT = 'Average'
+    If FinalIA< 12 then CAT = 'Weak'
+    Give these details only for 8th semester A, B, and C section students.
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">TABLE CREATION AND RECORD INSERTION</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg4-1')"></i>
+<pre><code class="sql" id="prg4-1">CREATE TABLE STUDENT(USN VARCHAR(10) PRIMARY KEY, SNAME VARCHAR(25), ADDRESS VARCHAR(25), PHONE BIGINT(10), GENDER CHAR(1));
+INSERT INTO STUDENT VALUES ('1BI13CS020','GUNDU','BELAGAVI', 1234567890,'M'); 
+
+CREATE TABLE SEMSEC(SSID VARCHAR(5) PRIMARY KEY, SEM INTEGER, SEC CHAR(1));
+INSERT INTO SEMSEC VALUES ('CSE8A', 8, 'A'); 
+    
+CREATE TABLE CLASS( USN VARCHAR(10) PRIMARY KEY, SSID VARCHAR(5), FOREIGN KEY(USN) REFERENCES STUDENT(USN) ON DELETE CASCADE, FOREIGN KEY(SSID) REFERENCES SEMSEC(SSID) ON DELETE CASCADE);
+INSERT INTO CLASS VALUES ('1BI13CS020','CSE8A'); 
+
+CREATE TABLE COURSE(SUBCODE VARCHAR(8) PRIMARY KEY,TITLE VARCHAR(20),SEM INTEGER,CREDITS INTEGER);
+INSERT INTO COURSE VALUES ('10CS81','ACA', 8, 4); 
+
+CREATE TABLE IAMARKS(USN VARCHAR(10),SUBCODE VARCHAR(8),SSID VARCHAR(5),TEST1 INTEGER,TEST2 INTEGER,TEST3 INTEGER,FINALIA INTEGER,PRIMARY KEY(SUBCODE,USN,SSID),FOREIGN KEY(USN) REFERENCES STUDENT(USN) ON DELETE CASCADE,FOREIGN KEY(SUBCODE) REFERENCES COURSE(SUBCODE) ON DELETE CASCADE,FOREIGN KEY(SSID) REFERENCES SEMSEC(SSID) ON DELETE CASCADE);
+INSERT INTO IAMARKS (USN, SUBCODE, SSID, TEST1, TEST2, TEST3) VALUES ('1BI13CS020','10CS81','CSE8A', 15, 16, 18);
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">SQL QUERIES</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg4-2')"></i>
+<pre><code class="sql" id="prg4-2">1. SELECT S.*, SS.SEM, SS.SEC FROM STUDENT S, SEMSEC SS, CLASS C WHERE S.USN = C.USN AND SS.SSID = C.SSID AND SS.SEM = 4 AND SS.SEC='C';
+
+2. SELECT SS.SEM, SS.SEC, S.GENDER, COUNT(S.GENDER) AS COUNT FROM STUDENT S, SEMSEC SS, CLASS C WHERE S.USN = C.USN AND SS.SSID = C.SSID GROUP BY SS.SEM, SS.SEC, S.GENDER ORDER BY SEM;
+
+3. CREATE VIEW STUDENT_TEST1_MARKS_V AS SELECT TEST1, SUBCODE FROM IAMARKS WHERE USN = '1BI15CS101';
+    SELECT * FROM STUDENT_TEST1_MARKS_V;
+
+SELECT S.USN,S.SNAME,S.ADDRESS,S.PHONE,S.GENDER, IA.SUBCODE,(CASE WHEN IA.FINALIA BETWEEN 17 AND 20 THEN 'OUTSTANDING' WHEN IA.FINALIA BETWEEN 12 AND 16 THEN 'AVERAGE' ELSE 'WEAK' END) AS CAT FROM STUDENT S, SEMSEC SS, IAMARKS IA, COURSE SUB WHERE S.USN = IA.USN AND SS.SSID = IA.SSID AND SUB.SUBCODE = IA.SUBCODE AND SUB.SEM = 8;
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Program 5 -->
+    <div >
+        <div class="col-md-12">
+            <div class="card program-card">
+                <div class="card-body">
+                    <h5 class="card-title">5.</h5>
+                    <hr class="aa">
+                    <h5 class="card-title">Consider the schema for Company Database:</h5>
+                    <div class="code-container">
+<pre><code class="text" id="prg5">EMPLOYEE (SSN, Name, Address, Sex, Salary, SuperSSN, DNo)
+DEPARTMENT (DNo, DName, MgrSSN, MgrStartDate)
+DLOCATION (DNo,DLoc)
+PROJECT (PNo, PName, PLocation, DNo)
+WORKS_ON (SSN, PNo, Hours)
+</code></pre>
+                    <hr class="aa">
+                    <h5 class="card-title">Write SQL queries to</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                    <pre><code class="text" id="prg5-q">1. Make a list of all project numbers for projects that involve an employee whose last name is 'Scott', either as a worker or as a manager of the that controls the project.
+
+2. Show the resulting salaries if every employee working on the 'IoT' project is given a 10 percent raise.
+                        
+3. Find the sum of the salaries of all employees of the 'Accounts' department, as well as the maximum salary, the minimum salary, and the average salary in this department
+                        
+4. Retrieve the name of each employee who works on all the projects controlled by department number 5 (use NOT EXISTS operator).
+
+5. For each department that has more than five employees, retrieve the department number and the number of its employees who are making more than Rs. 6,00,000.
+</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">TABLE CREATION AND RECORD INSERTION</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg5-1')"></i>
+<pre><code class="sql" id="prg5-1">CREATE TABLE DEPARTMENT(DNO INTEGER PRIMARY KEY,DNAME VARCHAR(20),MGR_SSN VARCHAR(20),MGR_START_DATE DATE);
+
+CREATE TABLE EMPLOYEE (SSN VARCHAR(20) PRIMARY KEY, NAME VARCHAR(20), ADDRESS VARCHAR(20), SEX CHAR(1), SALARY INTEGER, SUPERSSN VARCHAR(20), DNO INTEGER, FOREIGN KEY (SUPERSSN) REFERENCES EMPLOYEE (SSN), FOREIGN KEY (DNO) REFERENCES DEPARTMENT (DNO));
+ALTER TABLE DEPARTMENT ADD FOREIGN KEY (MGR_SSN) REFERENCES EMPLOYEE(SSN) ON DELETE CASCADE; 
+
+
+CREATE TABLE DLOCATION (DLOC VARCHAR(20), DNO INTEGER, FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNO) ON DELETE CASCADE, PRIMARY KEY (DNO, DLOC));
+    
+CREATE TABLE PROJECT (PNO INTEGER PRIMARY KEY, PNAME VARCHAR(20), PLOCATION VARCHAR(20), DNO INTEGER, FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNO) ON DELETE CASCADE);
+
+CREATE TABLE WORKS_ON (HOURS INTEGER, SSN VARCHAR(20), PNO INTEGER, FOREIGN KEY (SSN) REFERENCES EMPLOYEE(SSN) ON DELETE CASCADE, FOREIGN KEY (PNO) REFERENCES PROJECT(PNO) ON DELETE CASCADE, PRIMARY KEY (SSN, PNO));
+
+INSERT INTO EMPLOYEE (SSN, NAME, ADDRESS, SEX, SALARY) VALUES('ABC01','GUNDU','DUBAI','M', 15000);
+INSERT INTO DEPARTMENT VALUES ('1','ACCOUNTS','ABC01', '2016-01-03');
+
+UPDATE EMPLOYEE SET SUPERSSN=NULL, DNO='1' WHERE SSN='ABC01';
+
+INSERT INTO DLOCATION VALUES ('BENGALURU', '1');
+INSERT INTO PROJECT VALUES (1,'IOT','BENGALURU','1');
+INSERT INTO WORKS_ON VALUES (4, 'ABC01', 1);</code></pre>
+                    </div>
+                    <hr class="aa">
+                    <h5 class="card-title">SQL QUERIES</h5>
+                    <hr class="aa">
+                    <div class="code-container">
+                        <i class="fas fa-copy copy-icon" onclick="copyToClipboard('prg5-2')"></i>
+<pre><code class="sql" id="prg5-2">1. SELECT DISTINCT P.PNO FROM PROJECT P, DEPARTMENT D, EMPLOYEE E WHERE E.DNO=D.DNO AND D.MGR_SSN=E.SSN AND E.NAME LIKE 'GUNDU' UNION SELECT DISTINCT P1.PNO FROM PROJECT P1, WORKS_ON W, EMPLOYEE E1 WHERE P1.PNO=W.PNO AND E1.SSN=W.SSN AND E1.NAME LIKE 'GUNDU';
+
+    2. SELECT E.NAME, 1.1*E.SALARY AS INCR_SAL FROM EMPLOYEE E, WORKS_ON W, PROJECT P WHERE E.SSN=W.SSN AND W.PNO=P.PNO AND P.PNAME='IOT';
+
+    3. SELECT SUM(E.SALARY), MAX(E.SALARY), MIN(E.SALARY) FROM EMPLOYEE E, DEPARTMENT D WHERE E.DNO=D.DNO AND D.DNAME='ACCOUNTS';
+
+    4. SELECT E.NAME FROM EMPLOYEE E WHERE NOT EXISTS(SELECT PNO FROM PROJECT WHERE DNO='5' AND PNO NOT IN (SELECT PNO FROM WORKS_ON WHERE E.SSN=SSN));
+
+    5. SELECT D.DNO, COUNT(*) FROM DEPARTMENT D, EMPLOYEE E WHERE D.DNO=E.DNO AND E.SALARY > 600000 AND D.DNO IN (SELECT E1.DNO FROM EMPLOYEE E1 GROUP BY E1.DNO HAVING COUNT(*)>5) GROUP BY D.DNO;
+</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <a href="#" rel="noopener noreferrer">
+        <span class="footer-icons"><i class="fab fa-github"></i> </span>
+    </a>
+</div>
+
+
+<div id="dark-toast" class="dark-toast">
+    <div class="toast-body">Copied to clipboard!</div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Highlight.js for syntax highlighting -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+    function copyToClipboard(elementId) {
+        var copyText = document.getElementById(elementId);
+        var textArea = document.createElement("textarea");
+        textArea.value = copyText.innerText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+
+        var toast = document.getElementById('dark-toast');
+        toast.style.display = 'block';
+        toast.innerText = 'Copied to clipboard!';
+
+        setTimeout(function () {
+            toast.style.display = 'none';
+        }, 2000);
+    }
+</script>
+
+</body>
+</html>

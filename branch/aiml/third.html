@@ -65,17 +65,69 @@
             margin-bottom: 0;
             color: #6c757d;
         }
+
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .labs-heading {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        .lab-item {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .lab-item a {
+            display: block;
+            padding: 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .lab-item a:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .labs-heading {
+                font-size: 24px;
+            }
+
+            .lab-item a {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>AI-ML Second Year</h1>
+            <h1>AI-ML Third Year</h1>
             <nav>
                 <button class="nav-toggle">Menu</button>
                 <ul class="nav-menu">
                     <li><a href="aiml.html">AI-ML Home</a></li>
-                    <li><a href="third.html">Third Year</a></li>
+                    <li><a href="second.html">Second Year</a></li>
                     <li><a href="fourth.html">Fourth Year</a></li>
                     
                 </ul>
@@ -83,6 +135,26 @@
         </div>
     </header>
     <main>
+        <div class="container">
+            <h3 class="labs-heading">Labs</h3>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="lab-item">
+                        <a href="labs/csharp.html">C#</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="lab-item">
+                        <a href="labs/dbms.html">DBMS</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="lab-item">
+                        <a href="labs/cn.html">CN</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="grid-container">
             <!-- Main Content -->
             <div class="container-fluid" id="main-content">
@@ -116,12 +188,10 @@
                 </section>
             </div>
         </section>
+        
     </main>
-    <footer >        
-        <div class="container">
-            <p >&copy; 2024 Karo Padhai</p>
-        </div>
-    </footer>
+  
+   
     <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-storage-compat.js"></script>
