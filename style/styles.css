@@ -84,8 +84,8 @@ footer {
     background: linear-gradient(to right, #1e3c72, #2a5298);
     color: #fff;
     text-align: center;
-    padding: 2px 0;
-    position: fixed;
+    padding: 2px;
+    
     bottom: 0;
     width: 100%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -122,7 +122,7 @@ footer {
 .box a {
     color: #fff;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 /* Media query for responsiveness */
