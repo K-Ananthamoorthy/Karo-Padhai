@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karo Padhai</title>
     <link rel="stylesheet" href="/style/styles.css">
-   
-</head>
+   </head>
 <body>
     <header>
         <h1>Karo Padhai</h1>
         <nav>
-            <ul>
+            <button class="nav-toggle">Menu</button>
+            <ul class="nav-menu">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/branch/cse/cse.html">CSE</a></li>
                 <li><a href="/branch/aiml/aiml.html">AIML</a></li>
@@ -21,21 +21,24 @@
                 <li><a href="/branch/civil/civil.html">CIVIL</a></li>
             </ul>
         </nav>
+        
+        
+        
     </header>
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h2>Welcome </h2>
-                <p>Find everything you need for your academic success.</p>
-                <a href="/index.html" class="btn">Learn More</a>
+                <h2>Wassup!</h2>
+                <p></p>
+                <a href="/index.html" class="btn">Let's goo</a>
             </div>
         </section>
         
         <section class="about" id="learn-more">
             <div class="container">
                 <h2>About Us</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer quis justo eget magna aliquet ultricies. Nullam euismod vehicula enim, id placerat dui sodales nec.</p>
-                <a href="/about.html" class="btn">Get Started</a>
+                <p>Yet to See</p>
+                <a href="/about.html" class="btn">See more</a>
             </div>
         </section>
         
@@ -63,5 +66,17 @@
     <footer>
         <p>&copy; 2024 Karo Padhai</p>
     </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+    });
+});
+
+
+    </script>
 </body>
 </html>

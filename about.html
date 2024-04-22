@@ -5,14 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Karo Padhai</title>
     <link rel="stylesheet" href="/style/styles.css">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style/about.css">
 </head>
 <body>
     <header>
         <h1>Karo Padhai</h1>
         <nav>
-            <ul>
+            <button class="nav-toggle">Menu</button>
+            <ul class="nav-menu">
                 <li><a href="/index.html">Home</a></li>
-              
                 <li><a href="/branch/cse/cse.html">CSE</a></li>
                 <li><a href="/branch/aiml/aiml.html">AIML</a></li>
                 <li><a href="/branch/aids/aids.html">AIDS</a></li>
@@ -23,10 +28,83 @@
         </nav>
     </header>
     <main>
+        <!-- Bootstrap Toast Container -->
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+            <div id="contactToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+                <div class="toast-header bg-primary text-white">
+                    <i class="bi bi-heart-fill me-2"></i>
+                    <strong class="me-auto">Success</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Your message has been submitted successfully!
+                </div>
+            </div>
+        </div>
         
+        <div class="container">
+            <div class="contact-form">
+                <h2 class="text-center mb-4">Contact Us</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="usn">Your USN:</label>
+                        <input type="text" id="usn" name="usn" placeholder="Your USN" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Contact Number:</label>
+                        <input type="text" id="phone" name="phone" placeholder="Contact Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" placeholder="Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">Submit <i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 Karo Padhai</p>
     </footer>
+
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript to toggle navigation menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            navToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+    <!-- JavaScript to handle form submission and trigger toast -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            // Prevent default form submission
+            event.preventDefault();
+            
+            // Trigger the toast
+            const toastElement = document.getElementById('contactToast');
+            const toast = new bootstrap.Toast(toastElement);
+            toast.show();
+            
+            // Proceed with form submission after showing the toast
+            setTimeout(function() {
+                event.target.submit();
+            }, 5000); // Delay to allow the toast to be visible
+        });
+    </script>
+    <script type="module" src="/script/contact.js"></script>
 </body>
 </html>

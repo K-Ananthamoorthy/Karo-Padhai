@@ -9,7 +9,7 @@ body {
 
 /* Header styles */
 header {
-    background: linear-gradient(to right, #1e3c72, #2a5298);
+    background: linear-gradient(to right, #283048, #859398);
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -18,7 +18,7 @@ header {
 
 /* Navigation styles */
 nav {
-    background-color: #333;
+    background-color: #283048;
     padding: 10px;
     text-align: center;
 }
@@ -55,29 +55,55 @@ nav ul li a:hover {
 
 /* Mobile navigation toggle button */
 .nav-toggle {
-    display: none;
     background: none;
     border: none;
-    color: #fff;
+    color: #fefefe;
     font-size: 20px;
     cursor: pointer;
+    display: none;
 }
 
 /* Show/hide mobile navigation menu */
 .nav-menu {
-    display: flex;
-    flex-wrap: wrap;
+    display: none; /* Hide the navigation links by default */
 }
 
 .nav-menu.active {
-    display: block;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Initially hidden navigation items */
-.hidden {
-    display: none;
+/* Media query for responsiveness */
+@media only screen and (max-width: 768px) {
+    nav ul {
+        display: none; /* Hide the navigation links on mobile devices */
+    }
+
+    .nav-toggle {
+        display: block; /* Show the toggle button */
+        margin: 10px auto; /* Center the button */
+    }
+
+    .nav-menu.active {
+        display: flex; /* Show the navigation links when active */
+        flex-direction: column;
+        align-items: center;
+    }
 }
+
+/* Desktop view */
+@media only screen and (min-width: 769px) {
+    nav ul {
+        display: flex !important; /* Show the navigation links by default on desktop */
+    }
+
+    .nav-toggle {
+        display: none; /* Hide the toggle button on desktop */
+    }
+}
+
+
 
 /* Footer styles */
 footer {
@@ -85,7 +111,7 @@ footer {
     color: #fff;
     text-align: center;
     padding: 2px;
-    
+    position: fixed;
     bottom: 0;
     width: 100%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
@@ -231,7 +257,7 @@ footer {
         
         /* Hero section styles */
         .hero {
-            background-image: url('/hero-bg1.jpg');
+            background-image: url('/media/hero-bg1.jpg');
             background-size: cover;
             background-position: center;
             color: #fff;
@@ -287,31 +313,43 @@ footer {
             margin-bottom: 30px;
         }
         
-        /* Features section styles */
-        .features {
-            text-align: center;
-            padding: 50px 0;
-        }
-        
-        .features .container {
-            display: flex;
-            justify-content: space-around;
-        }
-        
-        .feature {
-            max-width: 300px;
-            margin-bottom: 30px;
-        }
-        
-        .feature i {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .feature h3 {
-            margin-bottom: 10px;
-        }
-        
-        .feature p {
-            color: #666;
-        }
+      /* Features section styles */
+.features {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.features .container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Allow features to wrap on smaller screens */
+}
+
+.feature {
+    max-width: 300px;
+    margin: 0 20px 30px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.feature i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #1e3c72; /* Change icon color */
+}
+
+.feature h3 {
+    margin-bottom: 10px;
+    color: #333; /* Change heading color */
+}
+
+.feature p {
+    color: #666;
+}

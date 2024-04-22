@@ -11,7 +11,9 @@
         <div class="container">
             <h1>CSE Second Year</h1>
             <nav>
-                <ul>
+                <button class="nav-toggle">Menu</button>
+                <ul class="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
                     <li><a href="cse.html">CSE Home</a></li>
                     <li><a href="third.html">Third Year</a></li>
                     <li><a href="fourth.html">Fourth Year</a></li>
@@ -45,5 +47,16 @@
             <p>&copy; 2024 Karo Padhai</p>
         </div>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+    });
+});
+
+    </script>
 </body>
 </html>

@@ -12,8 +12,7 @@
             <h1>Computer Science and Engineering (CSE)</h1>
             <!-- Updated HTML structure for navigation -->
             <nav>
-                <!-- Move the toggle button outside the ul -->
-                <button class="nav-toggle">&#9776;</button>
+                <button class="nav-toggle">Menu</button>
                 <ul class="nav-menu">
                     <li><a href="/index.html">Home</a></li>
                     <li><a href="/branch/cse/cse.html">CSE</a></li>
@@ -37,6 +36,9 @@
             <div class="box">
                 <a href="fourth.html">Fourth Year</a>
             </div>
+            <div class="box">
+                <a href="#">Labs</a>
+            </div>
         </section>
     </main>
     <footer>
@@ -45,14 +47,14 @@
         </div>
     </footer>
     <script>
-     // JavaScript for mobile navigation toggle
-const navToggle = document.querySelector('.nav-toggle');
-const navMenu = document.querySelector('.nav-menu');
+document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
 
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+    navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+    });
 });
-
     </script>
 </body>
 </html>
