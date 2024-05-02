@@ -36,4 +36,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-Thank you for using the College Study Resources website! For any inquiries or feedback, please contact us at [contact@example.com](mailto:contact@example.com).
+Thank you for using the College Study Resources website! For any inquiries or feedback, please contact us at [contact@example.com](aiml.smvitm@gmail.com).

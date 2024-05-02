@@ -84,4 +84,5 @@ async function renderFolders(containerId, folderName, storage) {
   } catch (error) {
       console.error('Failed to render subject folders:', error);
   }
+  
 }
