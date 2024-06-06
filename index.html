@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karo Padhai</title>
     <link rel="stylesheet" href="/style/styles.css">
@@ -22,7 +23,7 @@
     <header>
         <h1 class="typing-animation">Karo Padhai</h1>
         <nav>
-            <button class="nav-toggle">Menu</button>
+            <button class="nav-toggle"><i class="fa-solid fa-bars"></i></button>
             <ul class="nav-menu">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/branch/cse/cse.html">CSE</a></li>
@@ -34,6 +35,7 @@
             </ul>
         </nav>
     </header>
+    
     <main>
         <section class="hero">
             <div class="hero-content">
@@ -74,14 +76,16 @@
     </main>
    
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const navToggle = document.querySelector('.nav-toggle');
-            const navMenu = document.querySelector('.nav-menu');
+     document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
 
-            navToggle.addEventListener('click', function () {
-                navMenu.classList.toggle('active');
-            });
-        });
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+    });
+});
+
     </script>
+    <script src="https://kit.fontawesome.com/17323528a3.js" crossorigin="anonymous"></script>
 </body>
 </html>
