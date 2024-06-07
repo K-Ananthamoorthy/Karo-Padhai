@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASIC SCIENCE</title>
+    <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
+    <link rel="stylesheet" href="/style/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>BASIC SCIENCE</h1>
+            <nav>
+                <button class="nav-toggle">Menu</button>
+                <ul class="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/branch/cse/cse.html">CSE</a></li>
+                    <li><a href="/branch/aiml/aiml.html">AIML</a></li>
+                    <li><a href="/branch/aids/aids.html">AIDS</a></li>
+                    <li><a href="/branch/ece/ece.html">ECE</a></li>
+                    <li><a href="/branch/mech/mech.html">MECH</a></li>
+                    <li><a href="/branch/civil/civil.html">CIVIL</a></li>
+                    <li> <a href="/branch/basic_science/basic.html">BASIC SCIENCE</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="box-container">
+            <div class="box">
+                <a href="c_cycle/c_cycle.html">C cycle</a>
+            </div>
+            <div class="box">
+                <a href="p_cycle/p_cycle.html">P cycle</a>
+            </div>
+        </section>
+    </main>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    navToggle.addEventListener('click', function () {
+        navMenu.classList.toggle('active');
+    });
+});
+    </script>
+</body>
+</html>

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
-  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karo Padhai</title>
     <link rel="stylesheet" href="/style/styles.css">
@@ -23,19 +22,19 @@
     <header>
         <h1 class="typing-animation">Karo Padhai</h1>
         <nav>
-            <button class="nav-toggle"><i class="fa-solid fa-bars"></i></button>
+            <button class="nav-toggle">Menu</button>
             <ul class="nav-menu">
                 <li><a href="/index.html">Home</a></li>
                 <li><a href="/branch/cse/cse.html">CSE</a></li>
                 <li><a href="/branch/aiml/aiml.html">AIML</a></li>
                 <li><a href="/branch/aids/aids.html">AIDS</a></li>
-                <li><a href="/branch/ece/ece.html">ECE</a></li>
+                <li><a href="/branch/ec/ece.html">ECE</a></li>
                 <li><a href="/branch/mech/mech.html">MECH</a></li>
                 <li><a href="/branch/civil/civil.html">CIVIL</a></li>
+                <li> <a href="/branch/basic_science/basic_01.html">BASIC SCIENCE</a></li>
             </ul>
         </nav>
     </header>
-    
     <main>
         <section class="hero">
             <div class="hero-content">
@@ -66,26 +65,26 @@
                    <a href="/events.html"><h3>Event Calendar</h3></a> 
                     <p>Stay updated with upcoming events and deadlines.</p>
                 </div>
+
                 <div class="feature">
-                    <i class="fa fa-users"></i>
-                    <a href="https://connectx-me.netlify.app/index.html"><h3>Community</h3></a>
-                    <p>Connect with fellow students and educators in a easier way.</p>
+                    <i class="fa fa-book"></i>
+                   <a href="/upload.html"><h3>Help..!  Contribute to our work....</h3></a> 
+                    <p>---Upload -Study Materials---</p>
                 </div>
-            </div>
+                
+              
         </section>
     </main>
    
     <script>
-     document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
 
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-    });
-});
-
+            navToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+            });
+        });
     </script>
-    <script src="https://kit.fontawesome.com/17323528a3.js" crossorigin="anonymous"></script>
 </body>
 </html>

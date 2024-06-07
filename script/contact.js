@@ -1,16 +1,13 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyCN0VLc3wYAeKBk06g-HVtE4dDPcEZo6xk",
-authDomain: "aiml-smvitm.firebaseapp.com",
-databaseURL: "https://aiml-smvitm-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "aiml-smvitm",
-storageBucket: "aiml-smvitm.appspot.com",
-messagingSenderId: "867145474581",
-appId: "1:867145474581:web:a2e294081b458bdb69e41c",
-measurementId: "G-64CF103MLC"
-};
+    apiKey: "AIzaSyDRUswR5Q1HlPz0jqQWa3eT8DEnilpcN10",
+    authDomain: "karo-padhai.firebaseapp.com",
+    projectId: "karo-padhai",
+    storageBucket: "karo-padhai.appspot.com",
+    messagingSenderId: "52313475711",
+    appId: "1:52313475711:web:0ef384b635711ec2480d4a"
+  };
 // Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);

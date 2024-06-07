@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Materials</title>
+    <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
+    <link rel="stylesheet" href="/style/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        .upload-form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #495057;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            color: #dc3545;
+            font-weight: bold;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 123, 255, 0.2);
+            border-top: 5px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .success {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Upload Materials</h1>
+        <div class="upload-form">
+            <form id="upload-form">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="usn">USN:</label>
+                    <input type="text" id="usn" name="usn" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="details">Details:</label>
+                    <textarea id="details" name="details" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="branch">Branch:</label>
+                    <select id="branch" name="branch" required>
+                        <option value="">Select Branch</option>
+                        <option value="CSE">CSE</option>
+                        <option value="AIML">AIML</option>
+                        <option value="AIDS">AIDS</option>
+                        <option value="MECH">MECH</option>
+                        <option value="CIVIL">CIVIL</option>
+                        <option value="ECE">ECE</option>
+                        <option value="BASIC_SCIENCE_P">Basic Science (P Cycle)</option>
+                        <option value="BASIC_SCIENCE_C">Basic Science (C Cycle)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Fourth Year</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="sem">Semester:</label>
+                    <select id="sem" name="sem" required>
+                        <option value="">Select Semester</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Choose file:</label>
+                    <input type="file" id="file" name="file" required>
+                </div>
+
+                <button type="submit">Upload</button>
+            </form>
+            <div class="spinner" id="spinner"></div>
+            <div class="message" id="message"></div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-storage-compat.js"></script>
+    <script src="/script/fb_config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('upload-form');
+            const messageDiv = document.getElementById('message');
+            const spinner = document.getElementById('spinner');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                messageDiv.textContent = '';
+                spinner.style.display = 'block';
+
+                const name = document.getElementById('name').value;
+                const usn = document.getElementById('usn').value;
+                const details = document.getElementById('details').value;
+                const branch = document.getElementById('branch').value;
+                const year = document.getElementById('year').value;
+                const sem = document.getElementById('sem').value;
+                const file = document.getElementById('file').files[0];
+
+                if (!file) {
+                    messageDiv.textContent = 'Please select a file to upload.';
+                    spinner.style.display = 'none';
+                    return;
+                }
+
+                // Construct the file path
+                const filePath = `uploads/${branch}/${year}/${sem}/${file.name}`;
+
+                const metadata = {
+                    customMetadata: {
+                        name: name,
+                        usn: usn,
+                        details: details
+                    }
+                };
+
+                const storageRef = firebase.storage().ref(filePath);
+                try {
+                    await storageRef.put(file, metadata);
+                    messageDiv.textContent = 'File uploaded successfully!';
+                    messageDiv.classList.add('success');
+                } catch (error) {
+                    console.error('File upload failed:', error);
+                    messageDiv.textContent = 'File upload failed. Please try again.';
+                    messageDiv.classList.remove('success');
+                } finally {
+                    spinner.style.display = 'none';
+                }
+            });
+        });
+    </script>
+       <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            navToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

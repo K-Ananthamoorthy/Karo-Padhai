@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECE Fourth  Year Seventh  Semester</title>
+    <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
+    <link rel="stylesheet" href="/style/styles.css">
+    <style>
+        /* Additional styles for the subject folders */
+        .subject-folder {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .subject-folder:hover {
+            background-color: #e9ecef;
+        }
+
+        .subject-folder h3 {
+            margin: 0;
+            padding-bottom: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #343a40;
+        }
+
+        .files-list {
+            display: none;
+            padding-left: 20px;
+        }
+
+        .files-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .files-list li {
+            margin-bottom: 10px;
+        }
+
+        .files-list a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .files-list a:hover {
+            color: #0056b3;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>EC Fourth Year</h1>
+            <nav>
+                <button class="nav-toggle">Menu</button>
+                <ul class="nav-menu">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/branch/ec/ece.html">ECE Home</a></li>
+                    <li><a href="/branch/ec/third/third.html">Third Year</a></li>
+                    <li><a href="/branch/ec/second/second.html">second Year</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="grid-container" id="main-content">
+            <!-- Placeholder for Notes -->
+            <div class="grid-item" id="notes">
+                <h2>Notes</h2>
+                <div id="notes-content"></div>
+                <div class="loading-spinner" id="notes-spinner"></div>
+            </div>
+            <!-- Placeholder for TIE Important -->
+            <div class="grid-item" id="tie_imp">
+                <h2>TIE Important</h2>
+                <div id="tie_imp-content"></div>
+                <div class="loading-spinner" id="tie_imp-spinner"></div>
+            </div>
+            <!-- Placeholder for Old Papers -->
+            <div class="grid-item" id="oldpapers">
+                <h2>Old Papers</h2>
+                <div id="oldpapers-content"></div>
+                <div class="loading-spinner" id="oldpapers-spinner"></div>
+            </div>
+            <!-- Placeholder for Textbooks -->
+            <div class="grid-item" id="textbook">
+                <h2>Textbooks</h2>
+                <div id="textbook-content"></div>
+                <div class="loading-spinner" id="textbook-spinner"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-storage-compat.js"></script>
+    <script  src="/script/fb_config.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const branch = 'ece';
+            const year = 'fourth_year';
+            const sem = 'seventh_sem';
+            const categories = ['notes', 'tie_imp', 'oldpapers', 'textbook'];
+
+            for (const category of categories) {
+                const containerId = `${category}-content`;
+                const spinnerId = `${category}-spinner`;
+                const foldersDiv = document.getElementById(containerId);
+                const spinner = document.getElementById(spinnerId);
+                if (!foldersDiv) {
+                    console.error(`Container for ${category} not found.`);
+                    continue;
+                }
+
+                try {
+                    spinner.style.display = 'block'; // Show spinner
+                    const folderPath = `${branch}/${year}/${sem}/${category}`;
+                    const folderRef = storage.ref().child(folderPath);
+                    const folderList = await folderRef.listAll();
+
+                    folderList.prefixes.forEach(async (subjectRef) => {
+                        const subjectName = subjectRef.name.split('/').pop(); // Extract subject name from folder path
+                        const subjectDiv = document.createElement('div');
+                        subjectDiv.classList.add('subject-folder');
+                        subjectDiv.innerHTML = `<h3>${subjectName}</h3>`;
+                        foldersDiv.appendChild(subjectDiv);
+
+                        const filesList = document.createElement('div');
+                        filesList.classList.add('files-list');
+                        subjectDiv.appendChild(filesList);
+
+                        subjectDiv.addEventListener('click', async () => {
+                            if (filesList.style.display === 'none') {
+                                spinner.style.display = 'block'; // Show spinner
+                                const subjectList = await subjectRef.listAll();
+                                const filesLinks = await Promise.all(subjectList.items.map(async (itemRef) => {
+                                    const url = await itemRef.getDownloadURL();
+                                    const fileName = itemRef.name.split('/').pop();
+                                    return `<li><a href="${url}" target="_blank">${fileName}</a></li>`;
+                                }));
+                                filesList.innerHTML = `<ul>${filesLinks.join('')}</ul>`;
+                                filesList.style.display = 'block';
+                                spinner.style.display = 'none'; // Hide spinner
+                            } else {
+                                filesList.style.display = 'none';
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error(`Failed to fetch ${category}:`, error);
+                } finally {
+                    spinner.style.display = 'none'; // Hide spinner
+                }
+            }
+
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            navToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
