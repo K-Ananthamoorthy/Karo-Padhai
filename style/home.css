@@ -39,7 +39,7 @@ nav {
     background: none;
     border: none;
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     display: none;
 }
@@ -60,7 +60,7 @@ nav {
 .nav-menu li a {
     color: #fff;
     text-decoration: none;
-    padding: 10px 35px;
+    padding: 10px 15px;
     transition: background-color 0.3s ease, color 0.3s ease;
     border-radius: 5px;
 }
@@ -84,6 +84,10 @@ nav {
         display: none;
         gap: 0;
         padding: 0;
+    }
+
+    .nav-menu li {
+        margin: 0;
     }
 
     .nav-menu.active {
@@ -201,7 +205,7 @@ nav {
 .feature i {
     font-size: 48px;
     margin-bottom: 20px;
-    color: #007bff;
+    color: #1e3c72;
 }
 
 .feature h3 {
@@ -216,8 +220,8 @@ nav {
 }
 
 footer {
-    background-color: #000;
-    color: #fff;
+    background: linear-gradient(to right, #626976, #1c212a);
+    color: #ecebeb;
     text-align: center;
     padding: 20px;
     position: relative;
