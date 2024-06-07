@@ -6,6 +6,46 @@
     <title>Event Calendar - Karo Padhai</title>
     <link rel="icon" href="/media/google-apps-script_5968494.png" type="image/x-icon">
     <link rel="stylesheet" href="/style/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        main {
+            padding: 20px;
+        }
+
+        .calendar {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .calendar h2 {
+            margin-top: 0;
+            color: #343a40;
+        }
+
+        .event {
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .event h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .event p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -26,37 +66,41 @@
     <main>
         <section class="calendar">
             <h2>Event Calendar</h2>
-            <div class="calendar-grid">
+            <div class="calendar-grid" id="event-grid">
                 <!-- Calendar events will be dynamically generated here -->
-                <div class="event">
-                    <h3>POSTER making</h3>
-                    <p>Date: MAY 12, 2025</p>
-                    <p>Time: 10:00 AM - 12:00 PM</p>
-                    <p>Location: Lecture Hall A</p>
-                    <p>Description: Poster making competition about environmental awareness</p>
-                </div>
-                <div class="event">
-                   <h3>Tech-hack | Event</h3>
-                    <p>Date: May 15, 2024</p>
-                    <p>Time: 9:00 AM- 8:00 PM</p>
-                    <p>Location: Conference Room</p>
-                    <p>Description: One day hackathon: tech hack</p>
-                </div>
-                <!-- Add more events as needed -->
             </div>
         </section>
     </main>
    
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
 
-    navToggle.addEventListener('click', function () {
-        navMenu.classList.toggle('active');
-    });
-});
+            navToggle.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+            });
 
+            // Fetch events from JSON file
+            fetch('/events.json')
+                .then(response => response.json())
+                .then(data => {
+                    const eventGrid = document.getElementById('event-grid');
+                    data.events.forEach(event => {
+                        const eventDiv = document.createElement('div');
+                        eventDiv.classList.add('event');
+                        eventDiv.innerHTML = `
+                            <h3>${event.title}</h3>
+                            <p>Date: ${event.date}</p>
+                            <p>Time: ${event.time}</p>
+                            <p>Location: ${event.location}</p>
+                            <p>Description: ${event.description}</p>
+                        `;
+                        eventGrid.appendChild(eventDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching events:', error));
+        });
     </script>
 </body>
 </html>

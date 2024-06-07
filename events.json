@@ -1,0 +1,75 @@
+{
+    "events": [
+      {
+        "title": "Workshop on Python Programming",
+        "date": "June 12, 2024",
+        "time": "9:00 AM - 12:00 PM",
+        "location": "Computer Lab 1",
+        "description": "A hands-on workshop introducing Python programming concepts to students."
+      },
+      {
+        "title": "Seminar on Artificial Intelligence",
+        "date": "June 15, 2024",
+        "time": "2:00 PM - 4:00 PM",
+        "location": "Auditorium",
+        "description": "An informative seminar discussing the latest advancements in artificial intelligence technology."
+      },
+      {
+        "title": "Mechanical Engineering Quiz Competition",
+        "date": "June 20, 2024",
+        "time": "10:00 AM - 12:00 PM",
+        "location": "Mechanical Workshop",
+        "description": "A quiz competition testing students' knowledge in the field of mechanical engineering."
+      },
+      {
+        "title": "Electronics Project Exhibition",
+        "date": "June 25, 2024",
+        "time": "9:00 AM - 5:00 PM",
+        "location": "ECE Department",
+        "description": "An exhibition showcasing innovative projects developed by electronics engineering students."
+      },
+      {
+        "title": "Civil Engineering Guest Lecture",
+        "date": "June 30, 2024",
+        "time": "11:00 AM - 1:00 PM",
+        "location": "Lecture Hall B",
+        "description": "A guest lecture on recent trends and challenges in the field of civil engineering."
+      },
+      {
+        "title": "Aerospace Engineering Workshop",
+        "date": "July 5, 2024",
+        "time": "10:00 AM - 3:00 PM",
+        "location": "Aerospace Lab",
+        "description": "A hands-on workshop introducing aerospace engineering concepts and simulations."
+      },
+      {
+        "title": "Chemical Engineering Poster Presentation",
+        "date": "July 10, 2024",
+        "time": "1:00 PM - 4:00 PM",
+        "location": "Chemical Engineering Department",
+        "description": "A poster presentation session showcasing research projects in chemical engineering."
+      },
+      {
+        "title": "Electrical Engineering Symposium",
+        "date": "July 15, 2024",
+        "time": "9:00 AM - 6:00 PM",
+        "location": "Electrical Lab Complex",
+        "description": "A symposium featuring technical talks and panel discussions on electrical engineering topics."
+      },
+      {
+        "title": "Biotechnology Workshop on Genetic Engineering",
+        "date": "July 18, 2024",
+        "time": "2:00 PM - 5:00 PM",
+        "location": "Biotechnology Lab",
+        "description": "A workshop introducing students to the principles and applications of genetic engineering in biotechnology."
+      },
+      {
+        "title": "Computer Science Hackathon",
+        "date": "July 20, 2024",
+        "time": "8:00 AM - 10:00 PM",
+        "location": "Computer Science Department",
+        "description": "A full-day hackathon event where students collaborate to develop software solutions to real-world problems."
+      }
+    ]
+  }
+  
